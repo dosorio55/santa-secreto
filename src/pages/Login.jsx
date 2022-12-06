@@ -1,5 +1,7 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { useNavigate } from "react-router";
 import addAvagar from "../assets/addAvatar.png";
+import { fetchData } from "../constants/settings";
 import { users } from "../settings/constants";
 
 const initialState = {
@@ -9,12 +11,9 @@ const initialState = {
   image: "",
 };
 
-const Login = () => {
-  // const [users, setUsers] = useState([]);
+const Login = ({ setToken }) => {
   const [formValue, setFormValue] = useState(initialState);
-
-  console.log(formValue);
-  useEffect(() => {}, []);
+  const navigate = useNavigate();
 
   const handleChangeImage = (event) => {
     // setLoading(true);
@@ -30,19 +29,36 @@ const Login = () => {
     }
     // setLoading(false);
   };
+
   const handleFormChange = (event) => {
     const { value, name } = event.target;
     setFormValue((prevState) => ({ ...prevState, [name]: value }));
-    console.log(value, name);
   };
 
-  const handleSubmit = (event)=> {
-    event.preventDefault()
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    try {
+      const serverResponse = await fetchData(formValue, null, "POST", "users");
+      if (serverResponse.status === 200) {
+        const data = await serverResponse.json();
+        localStorage.setItem(
+          "token",
+          JSON.stringify({ token: data.data.token })
+        );
 
-  }
+        setToken(data.data.token);
+        navigate("/profile");
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
-    <form onSubmit={handleSubmit} className="md:w-1/2 sm:w-11/12 w-11/12 my-auto flex flex-col gap-6">
+    <form
+      onSubmit={handleSubmit}
+      className="md:w-1/2 sm:w-11/12 w-11/12 my-auto flex flex-col gap-6"
+    >
       <div className="w-full mb-8">
         <label
           htmlFor="add-image"
@@ -51,7 +67,7 @@ const Login = () => {
           <img
             src={formValue.image || addAvagar}
             className="w-20 h-20 rounded-full"
-            alt=""
+            alt="profile"
           />
           Agregar foto
         </label>
