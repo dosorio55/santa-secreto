@@ -3,7 +3,7 @@ export const users = [
     name: "Diego Alejandro",
   },
   {
-    name: "Ariel",
+    name: "Ariel Álvarez",
   },
   {
     name: "Emma Torr",
@@ -12,9 +12,9 @@ export const users = [
     name: "Catalina Acevedo",
   },
   {
-    name: "Fernando",
+    name: "Fernando Aguirre",
   },
   {
-    name: "Dasha",
+    name: "Dasha Kustova",
   },
 ];

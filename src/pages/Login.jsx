@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import { Link } from "react-router-dom";
+import Spinner from "../components/Spinner";
 import { fetchData } from "../constants/settings";
 import { users } from "../settings/constants";
 
@@ -11,6 +12,7 @@ const initialState = {
 
 const Login = ({ setToken }) => {
   const [formValue, setFormValue] = useState(initialState);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleFormChange = (event) => {
@@ -19,9 +21,15 @@ const Login = ({ setToken }) => {
   };
 
   const handleSubmit = async (event) => {
+    setLoading(true);
     event.preventDefault();
     try {
-      const serverResponse = await fetchData(formValue, null, "POST", "users/login");
+      const serverResponse = await fetchData(
+        formValue,
+        null,
+        "POST",
+        "users/login"
+      );
       console.log(serverResponse, formValue);
       if (serverResponse.status === 200) {
         const data = await serverResponse.json();
@@ -33,6 +41,7 @@ const Login = ({ setToken }) => {
         setToken(data.data.token);
         navigate("/profile");
       }
+      setLoading(false);
     } catch (error) {
       console.error(error);
     }
@@ -42,7 +51,7 @@ const Login = ({ setToken }) => {
     <div className="flex justify-center align-middle w-screen min-h-screen">
       <form
         onSubmit={handleSubmit}
-        className="md:w-1/2 sm:w-11/12 w-11/12 my-auto flex flex-col gap-6"
+        className="md:w-1/2 sm:w-11/12 w-11/12 my-auto flex flex-col gap-10"
       >
         <label
           htmlFor="users"
@@ -84,16 +93,24 @@ const Login = ({ setToken }) => {
             Password
           </label>
         </div>
-        <div className="flex justify-center items-center gap-5 w-full">
-          <button
-            type="submit"
-            className="w-1/2 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-          >
-            login
-          </button>
+        <div className="flex sm:flex-row flex-col justify-center items-center gap-5">
+            <button
+              type="submit"
+              className={`inline-block sm:w-auto w-full px-6 py-3 font-bold text-center text-white uppercase align-middle transition-all bg-transparent border-0 rounded-lg cursor-pointer shadow-soft-md bg-x-25 bg-150 leading-pro text-xs ease-soft-in tracking-tight-soft active:opacity-85  ${
+                !loading
+                  ? "bg-gradient-to-tl from-blue-600 to-cyan-400"
+                  : "hover:scale-102 hover:shadow-soft-xs opacity-50 cursor-not-allowed bg-gray-600"
+              }`}
+              disabled={loading}
+            >
+              {!loading ? "Login" : <Spinner />}
+            </button>
+      
           <p>
             No tienes una cuenta,{" "}
-            <Link to={'/'} className="font-semibold ">REGÍSTRATE</Link>
+            <Link to={"/"} className="font-semibold ">
+              REGÍSTRATE
+            </Link>
           </p>
         </div>
       </form>

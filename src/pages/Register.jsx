@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router";
 import { Link } from "react-router-dom";
 import addAvagar from "../assets/addAvatar.png";
+import Spinner from "../components/Spinner";
 import { fetchData } from "../constants/settings";
 import { users } from "../settings/constants";
 
@@ -14,6 +15,7 @@ const initialState = {
 
 const Register = ({ setToken }) => {
   const [formValue, setFormValue] = useState(initialState);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleChangeImage = (event) => {
@@ -38,6 +40,7 @@ const Register = ({ setToken }) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setLoading(true);
     try {
       const serverResponse = await fetchData(formValue, null, "POST", "users");
       if (serverResponse.status === 200) {
@@ -51,6 +54,7 @@ const Register = ({ setToken }) => {
         navigate("/profile");
       }
     } catch (error) {
+      setLoading(false);
       console.error(error);
     }
   };
@@ -68,7 +72,7 @@ const Register = ({ setToken }) => {
           >
             <img
               src={formValue.image || addAvagar}
-              className={`w-20 h-20 ${formValue.image && 'rounded-full'}`}
+              className={`w-20 h-20 ${formValue.image && "rounded-full"}`}
               alt="profile"
             />
             Agregar foto
@@ -140,16 +144,23 @@ const Register = ({ setToken }) => {
             Confirm password
           </label>
         </div>
-        <div className="flex justify-center w-full items-center gap-5">
+        <div className="flex sm:flex-row flex-col justify-center items-center gap-5">
           <button
             type="submit"
-            className="w-1/2 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            className={`inline-block sm:w-auto w-full px-6 py-3 font-bold text-center text-white uppercase align-middle transition-all bg-transparent border-0 rounded-lg cursor-pointer shadow-soft-md bg-x-25 bg-150 leading-pro text-xs ease-soft-in tracking-tight-soft active:opacity-85  ${
+              !loading
+                ? "bg-gradient-to-tl from-blue-600 to-cyan-400"
+                : "hover:scale-102 hover:shadow-soft-xs opacity-50 cursor-not-allowed bg-gray-600"
+            }`}
+            disabled={loading}
           >
-            Registrar
+            {!loading ? "Registrar" : <Spinner />}
           </button>
           <p>
             No tienes una cuenta,{" "}
-            <Link to={'/login'} className="font-semibold ">Login</Link>
+            <Link to={"/login"} className="font-semibold ">
+              Login
+            </Link>
           </p>
         </div>
       </form>
