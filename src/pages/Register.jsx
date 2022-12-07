@@ -52,6 +52,8 @@ const Register = ({ setToken }) => {
 
         setToken(data.data.token);
         navigate("/profile");
+      } else {
+        throw Error("El usuario ya está registrado");
       }
     } catch (error) {
       setLoading(false);
