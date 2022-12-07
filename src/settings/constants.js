@@ -6,9 +6,15 @@ export const users = [
     name: "Ariel",
   },
   {
-    name: "Emma",
+    name: "Emma Torr",
   },
   {
     name: "Catalina Acevedo",
+  },
+  {
+    name: "Fernando",
+  },
+  {
+    name: "Dasha",
   },
 ];
