@@ -61,7 +61,6 @@ const Profile = ({ token }) => {
     }
   };
 
-  console.log(userData);
   useEffect(() => {
     setLoading(true);
     if (!token) {
@@ -77,7 +76,6 @@ const Profile = ({ token }) => {
   }, []);
 
   const handleSanta = async (event) => {
-    console.log(event.target.textContent);
     if (event.target.textContent === "Mostrar mi santa secreto") {
       const mySanta = allUsers.find(
         (user) => user.name === userData.secretSanta.name

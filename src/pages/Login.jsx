@@ -3,14 +3,13 @@ import { useNavigate } from "react-router";
 import { Link } from "react-router-dom";
 import Spinner from "../components/Spinner";
 import { fetchData } from "../constants/settings";
-import { users } from "../settings/constants";
 
 const initialState = {
   name: "",
   password: "",
 };
 
-const Login = ({ setToken }) => {
+const Login = ({ setToken, users }) => {
   const [formValue, setFormValue] = useState(initialState);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -30,7 +29,6 @@ const Login = ({ setToken }) => {
         "POST",
         "users/login"
       );
-      console.log(serverResponse, formValue);
       if (serverResponse.status === 200) {
         const data = await serverResponse.json();
         localStorage.setItem(
@@ -94,18 +92,17 @@ const Login = ({ setToken }) => {
           </label>
         </div>
         <div className="flex sm:flex-row flex-col justify-center items-center gap-5">
-            <button
-              type="submit"
-              className={`inline-block sm:w-auto w-full px-6 py-3 font-bold text-center text-white uppercase align-middle transition-all bg-transparent border-0 rounded-lg cursor-pointer shadow-soft-md bg-x-25 bg-150 leading-pro text-xs ease-soft-in tracking-tight-soft active:opacity-85  ${
-                !loading
-                  ? "bg-gradient-to-tl from-blue-600 to-cyan-400"
-                  : "hover:scale-102 hover:shadow-soft-xs opacity-50 cursor-not-allowed bg-gray-600"
-              }`}
-              disabled={loading}
-            >
-              {!loading ? "Login" : <Spinner />}
-            </button>
-      
+          <button
+            type="submit"
+            className={`inline-block sm:w-auto w-full px-6 py-3 font-bold text-center text-white uppercase align-middle transition-all bg-transparent border-0 rounded-lg cursor-pointer shadow-soft-md bg-x-25 bg-150 leading-pro text-xs ease-soft-in tracking-tight-soft active:opacity-85  ${
+              !loading
+                ? "bg-gradient-to-tl from-blue-600 to-cyan-400"
+                : "hover:scale-102 hover:shadow-soft-xs opacity-50 cursor-not-allowed bg-gray-600"
+            }`}
+            disabled={loading}
+          >
+            {!loading ? "Login" : <Spinner />}
+          </button>
           <p>
             No tienes una cuenta,{" "}
             <Link to={"/"} className="font-semibold ">
