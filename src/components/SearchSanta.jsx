@@ -1,12 +1,13 @@
 import React from "react";
 import Spinner from "./Spinner";
+import profile from "../assets/profile-blank.png";
 
 const SearchSanta = ({ randomImage, name }) => {
   return (
     <div className="flex gap-5 flex-col text-center">
       <div className="flex items-center justify-center gap-5 mb-10">
         <img
-          src={randomImage}
+          src={randomImage === "imagen.test" ? profile : randomImage}
           className="w-20 h-20 rounded-full"
           alt="profile"
         />

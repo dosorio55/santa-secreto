@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import addAvagar from "../assets/addAvatar.png";
 import Spinner from "../components/Spinner";
 import { fetchData } from "../constants/settings";
-import { users } from "../settings/constants";
 
 const initialState = {
   name: "",
@@ -13,24 +12,23 @@ const initialState = {
   image: "",
 };
 
-const Register = ({ setToken }) => {
+const Register = ({ setToken, users }) => {
   const [formValue, setFormValue] = useState(initialState);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleChangeImage = (event) => {
-    // setLoading(true);
+    setLoading(true);
     const reader = new FileReader();
 
     if (event.target.files[0]) {
       reader.readAsDataURL(event.target.files[0]);
       reader.onload = async () => {
         const imageBase64 = reader.result;
-        console.log(imageBase64);
         setFormValue((prevState) => ({ ...prevState, image: imageBase64 }));
       };
     }
-    // setLoading(false);
+    setLoading(false);
   };
 
   const handleFormChange = (event) => {
@@ -42,14 +40,13 @@ const Register = ({ setToken }) => {
     event.preventDefault();
     setLoading(true);
     try {
-      const serverResponse = await fetchData(formValue, null, "POST", "users");
+      const serverResponse = await fetchData(formValue, null, "POST", "users/register");
       if (serverResponse.status === 200) {
         const data = await serverResponse.json();
         localStorage.setItem(
           "token",
           JSON.stringify({ token: data.data.token })
         );
-
         setToken(data.data.token);
         navigate("/profile");
       } else {
