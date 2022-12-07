@@ -1,5 +1,5 @@
-export const serverUrl = 'https://secret-santa-server.onrender.com'
-// export const serverUrl = 'http://localhost:4000'
+// export const serverUrl = 'https://secret-santa-server.onrender.com'
+export const serverUrl = 'http://localhost:4000'
 
 export const fetchData = async (body = null, token, method, url) => {
     return await fetch(`${serverUrl}/${url}`, {
