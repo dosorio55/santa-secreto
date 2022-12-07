@@ -5,6 +5,7 @@ import { fetchData } from "../constants/settings";
 
 const Profile = ({ token }) => {
   const [userData, setUserData] = useState({});
+  const [loading, setLoading] = useState();
   const navigate = useNavigate();
 
   const getUser = async () => {
@@ -43,9 +44,9 @@ const Profile = ({ token }) => {
   };
 
   return (
-    <div className="flex w-full min-h-screen justify-center items-center flex-col gap-10">
-      <div>
-        <div className="flex items-center gap-5">
+    <div className="flex w-full min-h-screen justify-center items-center gap-10">
+      <div className="flex flex-col justify-center gap-10 m-10">
+        <div className="flex items-center justify-center gap-5 mb-10">
           <img
             src={userData.image}
             className="w-20 h-20 rounded-full"
@@ -54,10 +55,13 @@ const Profile = ({ token }) => {
           <p>{userData.name}</p>
         </div>
         <button
-          onClick={handleSanta}
-          className="w-1/2 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+          className={`inline-block w-full px-6 py-3 mt-6 mb-0 font-bold text-center text-white uppercase align-middle transition-all bg-transparent border-0 rounded-lg cursor-pointer shadow-soft-md bg-x-25 bg-150 leading-pro text-xs ease-soft-in tracking-tight-soft active:opacity-85  ${
+            !loading
+              ? "bg-gradient-to-tl from-blue-600 to-cyan-400"
+              : "hover:scale-102 hover:shadow-soft-xs opacity-50 cursor-not-allowed bg-gray-600"
+          }`}
         >
-          Mostrar mi santa secreto
+          {!loading ? "Mostrar mi santa secreto" : <Spinner />}
         </button>
         <div className="flex flex-col gap-5">
           <Spinner size={"medium"} />
@@ -67,21 +71,27 @@ const Profile = ({ token }) => {
           <p className="absolute top-0 left-5">Mensaje de mi santa secreto</p>
           <p>bla bla bla</p>
         </div>
-        <button
-          onClick={handleLogout}
-          className="w-1/2 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-        >
-          logout
-        </button>
-      </div>
-      <div className="w-full max-w-full px-3 lg:flex-0 shrink-0 md:w-6/12">
-        <div className="absolute top-0 w-3/5 h-full -mr-32 overflow-hidden -skew-x-10 -right-40 rounded-bl-xl md:block">
-          <img
-            src="https://images.unsplash.com/photo-1609759843758-bf8cc831c13a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80"
-            alt="chrismas"
-            className="absolute inset-0 z-0 h-full w-full object-cover"
-          />
+
+        <div className="text-center">
+          <button
+            className={`inline-block w-full px-6 py-3 mt-6 mb-0 font-bold text-center text-white uppercase align-middle transition-all bg-transparent border-0 rounded-lg cursor-pointer shadow-soft-md bg-x-25 bg-150 leading-pro text-xs ease-soft-in tracking-tight-soft active:opacity-85  ${
+              !loading
+                ? "bg-gradient-to-tl from-blue-600 to-cyan-400"
+                : "hover:scale-102 hover:shadow-soft-xs opacity-50 cursor-not-allowed bg-gray-600"
+            }`}
+            onClick={handleLogout}
+            disabled={loading}
+          >
+            {!loading ? "Logout" : <Spinner />}
+          </button>
         </div>
+      </div>
+      <div className="h-screen justify-self-end md:inline hidden">
+        <img
+          className="h-full"
+          src="https://images.unsplash.com/photo-1609759843758-bf8cc831c13a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80"
+          alt="chrismas"
+        />
       </div>
     </div>
   );
