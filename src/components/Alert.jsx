@@ -1,19 +1,19 @@
-import PropTypes from 'prop-types'
-import { useEffect } from 'react'
-import { alertTimpeout } from '../config/settings'
+import PropTypes from "prop-types";
+import { useEffect } from "react";
+import { alertTimpeout } from "../constants/settings";
 
-const AlertDynamic = ({ alert, setAlert }) => {
+const Alert = ({ alert, setAlert }) => {
   useEffect(() => {
     if (alert.active) {
       setTimeout(() => {
-        setAlert({ active: false })
-      }, alertTimpeout)
+        setAlert({ active: false });
+      }, alertTimpeout);
     }
-  }, [alert.active])
+  }, []);
 
   const handleClose = () => {
-    setAlert({ active: false })
-  }
+    setAlert({ active: false });
+  };
 
   return (
     <>
@@ -67,12 +67,12 @@ const AlertDynamic = ({ alert, setAlert }) => {
         </div>
       )}
     </>
-  )
-}
+  );
+};
 
-AlertDynamic.propTypes = {
+Alert.propTypes = {
   alert: PropTypes.object,
   setAlert: PropTypes.func,
-}
+};
 
-export default AlertDynamic
+export default Alert;
