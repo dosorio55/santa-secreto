@@ -1,4 +1,3 @@
-// import logo from "./logo.svg";
 import { useEffect, useState } from "react";
 import { Route, Routes } from "react-router";
 import "./App.css";
@@ -12,6 +11,7 @@ const initialToken = JSON.parse(localStorage.getItem("token")) || "";
 function App() {
   const [token, setToken] = useState(initialToken.token);
   const [users, setUsers] = useState([]);
+  const [alert, setAlert] = useState({ active: false });
 
   const getAllUsers = async () => {
     try {
@@ -38,11 +38,25 @@ function App() {
       <Route path="/profile" element={<Profile token={token} />} />
       <Route
         path="/login"
-        element={<Login setToken={setToken} users={users} />}
+        element={
+          <Login
+            alert={alert}
+            setAlert={setAlert}
+            setToken={setToken}
+            users={users}
+          />
+        }
       />
       <Route
         path="/*"
-        element={<Register setToken={setToken} users={users} />}
+        element={
+          <Register
+            alert={alert}
+            setAlert={setAlert}
+            setToken={setToken}
+            users={users}
+          />
+        }
       />
     </Routes>
   );

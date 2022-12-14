@@ -11,3 +11,5 @@ export const fetchData = async (body = null, token, method, url) => {
         body: body ? JSON.stringify(body) : null,
     })
 }
+
+export const alertTimpeout = 5000
