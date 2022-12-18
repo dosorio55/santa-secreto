@@ -37,6 +37,9 @@ const Register = ({ setToken, users, alert, setAlert, loadingNames }) => {
     }
     setLoading(false);
   };
+  const notRegisteredUsers = users.filter((user) => !user.registered);
+
+  console.log("users", notRegisteredUsers);
 
   const handleFormChange = (event) => {
     const { value, name } = event.target;
@@ -101,7 +104,10 @@ const Register = ({ setToken, users, alert, setAlert, loadingNames }) => {
           className="md:w-1/2 sm:w-11/12 w-11/12 my-auto flex flex-col gap-6"
         >
           {loadingNames ? (
-            <Spinner size={"medium"} />
+            <>
+              <Spinner size={"medium"} />
+              <p>Por favor espera, estamos cargando los usuarios</p>
+            </>
           ) : (
             <>
               <div
@@ -142,7 +148,7 @@ const Register = ({ setToken, users, alert, setAlert, loadingNames }) => {
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 >
                   <option>Selecciona tu nombre</option>
-                  {users.map(({ name }, index) => (
+                  {notRegisteredUsers.map(({ name }, index) => (
                     <option key={index} value={name}>
                       {name}
                     </option>
