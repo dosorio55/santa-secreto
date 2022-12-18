@@ -104,10 +104,10 @@ const Register = ({ setToken, users, alert, setAlert, loadingNames }) => {
           className="md:w-1/2 sm:w-11/12 w-11/12 my-auto flex flex-col gap-6"
         >
           {loadingNames ? (
-            <>
+            <div className="flex text-center gap-5 flex-col">
               <Spinner size={"medium"} />
               <p>Por favor espera, estamos cargando los usuarios</p>
-            </>
+            </div>
           ) : (
             <>
               <div
