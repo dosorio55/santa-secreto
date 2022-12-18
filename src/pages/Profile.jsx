@@ -3,6 +3,7 @@ import { useNavigate } from "react-router";
 import SearchSanta from "../components/SearchSanta";
 import SecretSanta from "../components/SecretSanta";
 import Spinner from "../components/Spinner";
+import Tabs from "../components/Tabs";
 import { fetchData } from "../constants/settings";
 
 const Profile = ({ token }) => {
