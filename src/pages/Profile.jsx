@@ -3,6 +3,7 @@ import { useNavigate } from "react-router";
 import SearchSanta from "../components/SearchSanta";
 import SecretSanta from "../components/SecretSanta";
 import Spinner from "../components/Spinner";
+import Tabs from "../components/Tabs";
 import { fetchData } from "../constants/settings";
 
 const Profile = ({ token }) => {
@@ -115,6 +116,7 @@ const Profile = ({ token }) => {
   return (
     <div className="flex w-full min-h-screen justify-center items-center gap-10">
       <div className="flex flex-col justify-center gap-10 w-96 m-10">
+        <Tabs />
         <div className="flex items-center justify-center gap-5 mb-10">
           <img
             src={userData.image}

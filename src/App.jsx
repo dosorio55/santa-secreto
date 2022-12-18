@@ -11,16 +11,20 @@ const initialToken = JSON.parse(localStorage.getItem("token")) || "";
 function App() {
   const [token, setToken] = useState(initialToken.token);
   const [users, setUsers] = useState([]);
+  const [loadingNames, setLoadingNames] = useState(false)
   const [alert, setAlert] = useState({ active: false });
 
   const getAllUsers = async () => {
+    setLoadingNames(true)
     try {
       const serverResponse = await fetchData(null, null, "GET", "users");
       if (serverResponse.status === 200) {
         const data = await serverResponse.json();
         setUsers(data);
+        setLoadingNames(false)
       }
     } catch (error) {
+      setLoadingNames(false)
       console.error(error);
     }
   };
@@ -40,6 +44,7 @@ function App() {
         path="/login"
         element={
           <Login
+          loadingNames={loadingNames}
             alert={alert}
             setAlert={setAlert}
             setToken={setToken}
@@ -51,6 +56,7 @@ function App() {
         path="/*"
         element={
           <Register
+          loadingNames={loadingNames}
             alert={alert}
             setAlert={setAlert}
             setToken={setToken}
