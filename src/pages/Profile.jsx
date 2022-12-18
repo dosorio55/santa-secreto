@@ -116,7 +116,6 @@ const Profile = ({ token }) => {
   return (
     <div className="flex w-full min-h-screen justify-center items-center gap-10">
       <div className="flex flex-col justify-center gap-10 w-96 m-10">
-        <Tabs />
         <div className="flex items-center justify-center gap-5 mb-10">
           <img
             src={userData.image}
